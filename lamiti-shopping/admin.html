@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - LAMITI SHOPPING</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #2c3e50;
+            --primary-blue: #3498db;
+            --accent-red: #e74c3c;
+            --light-gray: #f8f9fa;
+            --text-gray: #6c757d;
+        }
+        
+        .sidebar {
+            background: linear-gradient(180deg, var(--primary-dark) 0%, var(--primary-blue) 100%);
+        }
+        
+        .sidebar-item {
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(4px);
+        }
+        
+        .sidebar-item.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-left: 4px solid white;
+        }
+        
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Admin Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="text-2xl font-bold text-blue-600">LAMITI</div>
+                    <div class="text-2xl font-light text-gray-700">ADMIN</div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="text-gray-700">
+                        <i class="fas fa-user-circle mr-2"></i>
+                        <span>Administrateur</span>
+                    </div>
+                    <button class="text-gray-700 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-sign-out-alt text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex pt-16">
+        <!-- Sidebar -->
+        <aside class="sidebar w-64 min-h-screen fixed left-0 top-16 text-white">
+            <div class="p-6">
+                <nav class="space-y-2">
+                    <a href="#" class="sidebar-item active flex items-center p-3 rounded-lg" onclick="showSection('dashboard')">
+                        <i class="fas fa-tachometer-alt mr-3"></i>
+                        <span>Tableau de bord</span>
+                    </a>
+                    
+                    <a href="#" class="sidebar-item flex items-center p-3 rounded-lg" onclick="showSection('products')">
+                        <i class="fas fa-boxes mr-3"></i>
+                        <span>Produits</span>
+                    </a>
+                    
+                    <a href="#" class="sidebar-item flex items-center p-3 rounded-lg" onclick="showSection('orders')">
+                        <i class="fas fa-shopping-cart mr-3"></i>
+                        <span>Commandes</span>
+                    </a>
+                    
+                    <a href="#" class="sidebar-item flex items-center p-3 rounded-lg" onclick="showSection('customers')">
+                        <i class="fas fa-users mr-3"></i>
+                        <span>Clients</span>
+                    </a>
+                    
+                    <a href="#" class="sidebar-item flex items-center p-3 rounded-lg" onclick="showSection('promotions')">
+                        <i class="fas fa-tags mr-3"></i>
+                        <span>Promotions</span>
+                    </a>
+                    
+                    <a href="#" class="sidebar-item flex items-center p-3 rounded-lg" onclick="showSection('settings')">
+                        <i class="fas fa-cog mr-3"></i>
+                        <span>Paramètres</span>
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 ml-64 p-8">
+            <!-- Dashboard Section -->
+            <div id="dashboard-section" class="section">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900">Tableau de bord</h1>
+                    <p class="text-gray-600 mt-2">Vue d'ensemble de votre boutique</p>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="stat-card bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-600 text-sm">Chiffre d'affaires</p>
+                                <p class="text-3xl font-bold text-gray-900">€24,567</p>
+                                <p class="text-green-600 text-sm">+12.5% ce mois</p>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-euro-sign text-2xl text-blue-600"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-600 text-sm">Commandes</p>
+                                <p class="text-3xl font-bold text-gray-900">1,234</p>
+                                <p class="text-green-600 text-sm">+8.2% ce mois</p>
+                            </div>
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-shopping-cart text-2xl text-green-600"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-600 text-sm">Clients</p>
+                                <p class="text-3xl font-bold text-gray-900">5,678</p>
+                                <p class="text-green-600 text-sm">+15.3% ce mois</p>
+                            </div>
+                            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-users text-2xl text-purple-600"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-600 text-sm">Produits</p>
+                                <p class="text-3xl font-bold text-gray-900">2,345</p>
+                                <p class="text-red-600 text-sm">-2.1% ce mois</p>
+                            </div>
+                            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-boxes text-2xl text-red-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Ventes mensuelles</h3>
+                        <div class="chart-container">
+                            <canvas id="salesChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Répartition des ventes</h3>
+                        <div class="chart-container">
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Orders Table -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="px-6 py-4 border-b">
+                        <h3 class="text-xl font-semibold text-gray-900">Commandes récentes</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Commande</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Montant</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-table" class="bg-white divide-y divide-gray-200">
+                                <!-- Orders will be dynamically loaded -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Section -->
+            <div id="products-section" class="section hidden">
+                <div class="mb-8 flex justify-between items-center">
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-900">Gestion des produits</h1>
+                        <p class="text-gray-600 mt-2">Ajoutez, modifiez et supprimez vos produits</p>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button onclick="exportProducts()" class="bg-green-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                            <i class="fas fa-download mr-2"></i>Exporter
+                        </button>
+                        <button onclick="importProducts()" class="bg-purple-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors">
+                            <i class="fas fa-upload mr-2"></i>Importer
+                        </button>
+                        <button onclick="openProductModal()" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-plus mr-2"></i>Ajouter un produit
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Products Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center">
+                            <div class="flex-1">
+                                <p class="text-sm text-gray-600">Total produits</p>
+                                <p class="text-2xl font-bold text-gray-900">2,345</p>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-boxes text-blue-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center">
+                            <div class="flex-1">
+                                <p class="text-sm text-gray-600">En stock</p>
+                                <p class="text-2xl font-bold text-green-600">1,987</p>
+                            </div>
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-check text-green-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center">
+                            <div class="flex-1">
+                                <p class="text-sm text-gray-600">Stock faible</p>
+                                <p class="text-2xl font-bold text-yellow-600">234</p>
+                            </div>
+                            <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-exclamation-triangle text-yellow-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center">
+                            <div class="flex-1">
+                                <p class="text-sm text-gray-600">Hors stock</p>
+                                <p class="text-2xl font-bold text-red-600">124</p>
+                            </div>
+                            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-times text-red-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products Filters -->
+                <div class="bg-white rounded-lg shadow-lg p-4 mb-6">
+                    <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
+                        <div class="flex flex-wrap gap-2">
+                            <select id="category-filter" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                                <option value="">Toutes catégories</option>
+                                <option value="vetements">Vêtements</option>
+                                <option value="accessoires">Accessoires</option>
+                                <option value="chaussures">Chaussures</option>
+                                <option value="electronique">Électronique</option>
+                            </select>
+                            <select id="status-filter" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                                <option value="">Tous statuts</option>
+                                <option value="actif">Actif</option>
+                                <option value="inactif">Inactif</option>
+                            </select>
+                            <select id="stock-filter" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                                <option value="">Stock</option>
+                                <option value="available">Disponible</option>
+                                <option value="low">Stock faible</option>
+                                <option value="out">Hors stock</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="text" id="product-search" placeholder="Rechercher un produit..." class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                            <button onclick="searchProducts()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products Table -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="px-6 py-4 border-b">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-xl font-semibold text-gray-900">Liste des produits</h3>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-sm text-gray-600">Affichage:</span>
+                                <select id="items-per-page" class="border border-gray-300 rounded px-2 py-1 text-sm">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <input type="checkbox" class="select-all">
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catégorie</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prix</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="products-table" class="bg-white divide-y divide-gray-200">
+                                <!-- Products will be dynamically loaded -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Table Footer -->
+                    <div class="px-6 py-4 border-t bg-gray-50">
+                        <div class="flex justify-between items-center">
+                            <div class="text-sm text-gray-700">
+                                Affichage de <span id="showing-start">1</span> à <span id="showing-end">10</span> sur <span id="total-products">2,345</span> produits
+                            </div>
+                            <div class="flex space-x-2">
+                                <button onclick="previousPage()" class="px-3 py-2 border border-gray-300 rounded text-sm hover:bg-gray-100 disabled:opacity-50" disabled>
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <span class="px-3 py-2 text-sm">Page 1 sur 235</span>
+                                <button onclick="nextPage()" class="px-3 py-2 border border-gray-300 rounded text-sm hover:bg-gray-100">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other sections will be added similarly -->
+            <div id="orders-section" class="section hidden">
+                <h1 class="text-3xl font-bold text-gray-900">Gestion des commandes</h1>
+                <p class="text-gray-600 mt-2">Gérez et suivez vos commandes</p>
+            </div>
+
+            <div id="customers-section" class="section hidden">
+                <h1 class="text-3xl font-bold text-gray-900">Gestion des clients</h1>
+                <p class="text-gray-600 mt-2">Gérez votre base de clients</p>
+            </div>
+
+            <div id="promotions-section" class="section hidden">
+                <h1 class="text-3xl font-bold text-gray-900">Gestion des promotions</h1>
+                <p class="text-gray-600 mt-2">Créez et gérez vos promotions</p>
+            </div>
+
+            <div id="settings-section" class="section hidden">
+                <h1 class="text-3xl font-bold text-gray-900">Paramètres</h1>
+                <p class="text-gray-600 mt-2">Configurez votre boutique</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl max-w-4xl w-full max-h-screen overflow-y-auto">
+                <div class="p-6 border-b">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-2xl font-bold text-gray-900">Ajouter/Modifier un produit</h3>
+                        <button onclick="closeProductModal()" class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times text-2xl"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="p-6">
+                    <form id="product-form" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Nom du produit</label>
+                                <input type="text" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Référence</label>
+                                <input type="text" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                            <textarea rows="4" class="w-full border border-gray-300 rounded-lg px-4 py-2" required></textarea>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Catégorie</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+                                    <option value="">Sélectionner une catégorie</option>
+                                    <option value="vetements">Vêtements</option>
+                                    <option value="accessoires">Accessoires</option>
+                                    <option value="chaussures">Chaussures</option>
+                                    <option value="electronique">Électronique</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Prix standard</label>
+                                <input type="number" step="0.01" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Prix promotionnel</label>
+                                <input type="number" step="0.01" class="w-full border border-gray-300 rounded-lg px-4 py-2">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Quantité en stock</label>
+                                <input type="number" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Statut</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+                                    <option value="actif">Actif</option>
+                                    <option value="inactif">Inactif</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Images du produit</label>
+                            <input type="file" multiple accept="image/*" class="w-full border border-gray-300 rounded-lg px-4 py-2">
+                            <p class="text-sm text-gray-500 mt-1">Vous pouvez sélectionner plusieurs images</p>
+                        </div>
+                        
+                        <div class="flex justify-end space-x-4">
+                            <button type="button" onclick="closeProductModal()" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 transition-colors">
+                                Annuler
+                            </button>
+                            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                Enregistrer
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

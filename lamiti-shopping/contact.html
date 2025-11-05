@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - LAMITI SHOPPING</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #2c3e50;
+            --primary-blue: #3498db;
+            --accent-red: #e74c3c;
+            --light-gray: #f8f9fa;
+            --text-gray: #6c757d;
+        }
+        
+        .contact-card {
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .form-input {
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="text-2xl font-bold text-blue-600">LAMITI</div>
+                    <div class="text-2xl font-light text-gray-700">SHOPPING</div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="text-gray-700 hover:text-blue-600 transition-colors">Accueil</a>
+                        <a href="catalogue.html" class="text-gray-700 hover:text-blue-600 transition-colors">Catalogue</a>
+                        <a href="categories.html" class="text-gray-700 hover:text-blue-600 transition-colors">Catégories</a>
+                        <a href="contact.html" class="text-blue-600 font-medium hover:text-blue-800 transition-colors">Contact</a>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-700 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-search text-xl"></i>
+                    </button>
+                    <button class="text-gray-700 hover:text-blue-600 transition-colors relative">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                    </button>
+                    <button class="text-gray-700 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-user text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="bg-gradient-to-r from-blue-600 to-purple-600 text-white pt-24 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl font-bold mb-4">Contactez-nous</h1>
+            <p class="text-xl text-blue-100">Nous sommes là pour vous aider</p>
+        </div>
+    </section>
+
+    <!-- Contact Information -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <div class="contact-card bg-white rounded-xl shadow-lg p-8 text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-phone text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Téléphone</h3>
+                    <p class="text-gray-600 mb-2">+33 1 23 45 67 89</p>
+                    <p class="text-sm text-gray-500">Lun-Ven 9h-18h</p>
+                </div>
+                
+                <div class="contact-card bg-white rounded-xl shadow-lg p-8 text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-envelope text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Email</h3>
+                    <p class="text-gray-600 mb-2">contact@lamiti-shopping.com</p>
+                    <p class="text-sm text-gray-500">Réponse sous 24h</p>
+                </div>
+                
+                <div class="contact-card bg-white rounded-xl shadow-lg p-8 text-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-map-marker-alt text-2xl text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Adresse</h3>
+                    <p class="text-gray-600 mb-2">123 Avenue de la Mode</p>
+                    <p class="text-sm text-gray-500">75001 Paris, France</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Envoyez-nous un message</h2>
+                <p class="text-xl text-gray-600">Une question ? Un conseil ? N'hésitez pas à nous contacter</p>
+            </div>
+            
+            <form id="contact-form" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="first-name" class="block text-sm font-medium text-gray-700 mb-2">Prénom</label>
+                        <input type="text" id="first-name" name="first-name" required
+                               class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="last-name" class="block text-sm font-medium text-gray-700 mb-2">Nom</label>
+                        <input type="text" id="last-name" name="last-name" required
+                               class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" id="email" name="email" required
+                           class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                
+                <div>
+                    <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Sujet</label>
+                    <select id="subject" name="subject" required
+                            class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">Sélectionnez un sujet</option>
+                        <option value="question">Question sur un produit</option>
+                        <option value="order">Question sur une commande</option>
+                        <option value="return">Retour ou échange</option>
+                        <option value="support">Support technique</option>
+                        <option value="other">Autre</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                    <textarea id="message" name="message" rows="6" required
+                              class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                              placeholder="Décrivez votre demande..."></textarea>
+                </div>
+                
+                <div class="flex items-center">
+                    <input type="checkbox" id="newsletter" name="newsletter" 
+                           class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                    <label for="newsletter" class="ml-2 text-sm text-gray-700">
+                        Je souhaite recevoir la newsletter et les offres promotionnelles
+                    </label>
+                </div>
+                
+                <div class="text-center">
+                    <button type="submit" 
+                            class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-paper-plane mr-2"></i>Envoyer le message
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Questions fréquentes</h2>
+                <p class="text-xl text-gray-600">Trouvez rapidement des réponses à vos questions</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="faq-item bg-white rounded-lg shadow-lg overflow-hidden">
+                    <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors">
+                        <span class="font-semibold text-gray-900">Quels sont les délais de livraison ?</span>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-4 hidden">
+                        <p class="text-gray-600">Les délais de livraison sont de 24-48h pour la France métropolitaine. Pour l'international, comptez 3-7 jours ouvrables.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item bg-white rounded-lg shadow-lg overflow-hidden">
+                    <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors">
+                        <span class="font-semibold text-gray-900">Comment retourner un article ?</span>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-4 hidden">
+                        <p class="text-gray-600">Vous avez 30 jours pour retourner un article. Il doit être dans son état d'origine avec toutes les étiquettes. Les retours sont gratuits en France.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item bg-white rounded-lg shadow-lg overflow-hidden">
+                    <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors">
+                        <span class="font-semibold text-gray-900">Quels modes de paiement acceptez-vous ?</span>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-4 hidden">
+                        <p class="text-gray-600">Nous acceptons les cartes bancaires (Visa, Mastercard, American Express), PayPal, et Apple Pay. Tous les paiements sont sécurisés.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item bg-white rounded-lg shadow-lg overflow-hidden">
+                    <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors">
+                        <span class="font-semibold text-gray-900">Comment suivre ma commande ?</span>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-4 hidden">
+                        <p class="text-gray-600">Un email de confirmation avec un numéro de suivi vous est envoyé dès l'expédition. Vous pouvez également suivre votre commande dans votre espace client.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Où nous trouver</h2>
+                <p class="text-xl text-gray-600">Venez nous rendre visite dans notre boutique parisienne</p>
+            </div>
+            
+            <div class="bg-gray-200 rounded-2xl h-96 flex items-center justify-center">
+                <div class="text-center">
+                    <i class="fas fa-map-marked-alt text-6xl text-gray-400 mb-4"></i>
+                    <p class="text-xl text-gray-600">Carte interactive</p>
+                    <p class="text-gray-500">123 Avenue de la Mode, 75001 Paris</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="text-2xl font-bold text-blue-400">LAMITI</div>
+                        <div class="text-2xl font-light">SHOPPING</div>
+                    </div>
+                    <p class="text-gray-400">Votre destination shopping en ligne avec des milliers de produits tendance.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Navigation</h3>
+                    <ul class="space-y-2">
+                        <li><a href="catalogue.html" class="text-gray-400 hover:text-white transition-colors">Catalogue</a></li>
+                        <li><a href="categories.html" class="text-gray-400 hover:text-white transition-colors">Catégories</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Aide</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Livraison</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Retours</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Suivez-nous</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 LAMITI SHOPPING. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Contact form handling
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate form submission
+            window.LamitiShopping.showNotification('Message envoyé avec succès ! Nous vous répondrons sous 24h.', 'success');
+            
+            // Reset form
+            this.reset();
+        });
+        
+        // FAQ functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const answer = this.nextElementSibling;
+                const icon = this.querySelector('i');
+                
+                // Toggle answer visibility
+                answer.classList.toggle('hidden');
+                
+                // Rotate icon
+                if (answer.classList.contains('hidden')) {
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

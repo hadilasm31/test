@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commande - LAMITI SHOPPING</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #2c3e50;
+            --primary-blue: #3498db;
+            --accent-red: #e74c3c;
+            --light-gray: #f8f9fa;
+            --text-gray: #6c757d;
+        }
+        
+        .checkout-step {
+            transition: all 0.3s ease;
+        }
+        
+        .checkout-step.active {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+        
+        .form-input {
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+        }
+        
+        .payment-method {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .payment-method:hover {
+            background-color: var(--light-gray);
+        }
+        
+        .payment-method.selected {
+            background-color: rgba(52, 152, 219, 0.1);
+            border-color: var(--primary-blue);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="text-2xl font-bold text-blue-600">LAMITI</div>
+                    <div class="text-2xl font-light text-gray-700">SHOPPING</div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="text-gray-700 hover:text-blue-600 transition-colors">Accueil</a>
+                        <a href="catalogue.html" class="text-gray-700 hover:text-blue-600 transition-colors">Catalogue</a>
+                        <a href="categories.html" class="text-gray-700 hover:text-blue-600 transition-colors">Catégories</a>
+                        <a href="contact.html" class="text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-700 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-search text-xl"></i>
+                    </button>
+                    <button class="text-gray-700 hover:text-blue-600 transition-colors relative">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                    </button>
+                    <button class="text-gray-700 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-user text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Checkout Steps -->
+    <section class="bg-white border-b pt-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex justify-between items-center">
+                <div class="checkout-step active w-12 h-12 rounded-full flex items-center justify-center font-bold">1</div>
+                <div class="flex-1 h-1 bg-gray-200 mx-4"></div>
+                <div class="checkout-step w-12 h-12 rounded-full flex items-center justify-center font-bold bg-gray-200">2</div>
+                <div class="flex-1 h-1 bg-gray-200 mx-4"></div>
+                <div class="checkout-step w-12 h-12 rounded-full flex items-center justify-center font-bold bg-gray-200">3</div>
+            </div>
+            <div class="flex justify-between mt-2">
+                <span class="text-sm font-medium">Informations</span>
+                <span class="text-sm text-gray-500">Paiement</span>
+                <span class="text-sm text-gray-500">Confirmation</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Checkout Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Checkout Form -->
+            <div class="lg:col-span-2">
+                <!-- Customer Information -->
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                        <i class="fas fa-user mr-2 text-blue-600"></i>
+                        Informations de livraison
+                    </h2>
+                    
+                    <form id="checkout-form" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="first-name" class="block text-sm font-medium text-gray-700 mb-2">Prénom *</label>
+                                <input type="text" id="first-name" name="first-name" required
+                                       class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="last-name" class="block text-sm font-medium text-gray-700 mb-2">Nom *</label>
+                                <input type="text" id="last-name" name="last-name" required
+                                       class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                            <input type="email" id="email" name="email" required
+                                   class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Téléphone</label>
+                            <input type="tel" id="phone" name="phone"
+                                   class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="address" class="block text-sm font-medium text-gray-700 mb-2">Adresse *</label>
+                            <input type="text" id="address" name="address" required
+                                   class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                   placeholder="123 Rue de la Mode">
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label for="zip-code" class="block text-sm font-medium text-gray-700 mb-2">Code postal *</label>
+                                <input type="text" id="zip-code" name="zip-code" required
+                                       class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="city" class="block text-sm font-medium text-gray-700 mb-2">Ville *</label>
+                                <input type="text" id="city" name="city" required
+                                       class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="country" class="block text-sm font-medium text-gray-700 mb-2">Pays *</label>
+                                <select id="country" name="country" required
+                                        class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="">Sélectionner</option>
+                                    <option value="FR">France</option>
+                                    <option value="BE">Belgique</option>
+                                    <option value="CH">Suisse</option>
+                                    <option value="DE">Allemagne</option>
+                                    <option value="ES">Espagne</option>
+                                    <option value="IT">Italie</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Save Address -->
+                        <div class="flex items-center">
+                            <input type="checkbox" id="save-address" name="save-address" 
+                                   class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                            <label for="save-address" class="ml-2 text-sm text-gray-700">
+                                Enregistrer cette adresse pour mes prochaines commandes
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Shipping Method -->
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                        <i class="fas fa-truck mr-2 text-blue-600"></i>
+                        Mode de livraison
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <label class="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50">
+                            <input type="radio" name="shipping" value="standard" checked class="text-blue-600">
+                            <div class="ml-4 flex-1">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold">Livraison standard</span>
+                                    <span class="text-green-600 font-bold">GRATUITE</span>
+                                </div>
+                                <p class="text-sm text-gray-600">3-5 jours ouvrables</p>
+                            </div>
+                        </label>
+                        
+                        <label class="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50">
+                            <input type="radio" name="shipping" value="express" class="text-blue-600">
+                            <div class="ml-4 flex-1">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold">Livraison express</span>
+                                    <span class="text-blue-600 font-bold">€9.99</span>
+                                </div>
+                                <p class="text-sm text-gray-600">1-2 jours ouvrables</p>
+                            </div>
+                        </label>
+                        
+                        <label class="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50">
+                            <input type="radio" name="shipping" value="premium" class="text-blue-600">
+                            <div class="ml-4 flex-1">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold">Livraison premium</span>
+                                    <span class="text-blue-600 font-bold">€19.99</span>
+                                </div>
+                                <p class="text-sm text-gray-600">Livraison le jour même (Paris uniquement)</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Payment Method -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                        <i class="fas fa-credit-card mr-2 text-blue-600"></i>
+                        Paiement
+                    </h2>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div class="payment-method selected p-4 border-2 border-blue-500 rounded-lg">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="payment" value="card" checked class="text-blue-600">
+                                <i class="fas fa-credit-card ml-3 text-blue-600"></i>
+                                <span class="ml-3 font-semibold">Carte bancaire</span>
+                            </label>
+                        </div>
+                        
+                        <div class="payment-method p-4 border border-gray-200 rounded-lg">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="payment" value="paypal" class="text-blue-600">
+                                <i class="fab fa-paypal ml-3 text-blue-500"></i>
+                                <span class="ml-3 font-semibold">PayPal</span>
+                            </label>
+                        </div>
+                        
+                        <div class="payment-method p-4 border border-gray-200 rounded-lg">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="payment" value="apple-pay" class="text-blue-600">
+                                <i class="fab fa-apple ml-3 text-gray-900"></i>
+                                <span class="ml-3 font-semibold">Apple Pay</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Card Form -->
+                    <div id="card-form" class="space-y-4">
+                        <div>
+                            <label for="card-number" class="block text-sm font-medium text-gray-700 mb-2">Numéro de carte *</label>
+                            <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012 3456" required
+                                   class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-6">
+                            <div>
+                                <label for="expiry-date" class="block text-sm font-medium text-gray-700 mb-2">Date d'expiration *</label>
+                                <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/AA" required
+                                       class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="cvv" class="block text-sm font-medium text-gray-700 mb-2">CVV *</label>
+                                <input type="text" id="cvv" name="cvv" placeholder="123" required
+                                       class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="cardholder-name" class="block text-sm font-medium text-gray-700 mb-2">Nom du titulaire *</label>
+                            <input type="text" id="cardholder-name" name="cardholder-name" required
+                                   class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Order Summary -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-xl shadow-lg p-6 sticky top-24">
+                    <h3 class="text-xl font-bold text-gray-900 mb-6">Résumé de la commande</h3>
+                    
+                    <div id="order-items" class="space-y-3 mb-6">
+                        <!-- Order items will be loaded here -->
+                    </div>
+                    
+                    <hr class="border-gray-200 mb-4">
+                    
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Sous-total</span>
+                            <span id="subtotal">€439.97</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Livraison</span>
+                            <span id="shipping-summary">Gratuite</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">TVA</span>
+                            <span id="tax-summary">€87.99</span>
+                        </div>
+                        <hr class="border-gray-200">
+                        <div class="flex justify-between text-lg font-bold">
+                            <span>Total</span>
+                            <span id="total-summary" class="text-blue-600">€527.96</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Terms and Conditions -->
+                    <div class="mb-6">
+                        <label class="flex items-start">
+                            <input type="checkbox" id="terms" name="terms" required 
+                                   class="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                            <span class="ml-2 text-sm text-gray-700">
+                                J'accepte les <a href="#" class="text-blue-600 hover:text-blue-800">conditions générales de vente</a> 
+                                et la <a href="#" class="text-blue-600 hover:text-blue-800">politique de confidentialité</a>
+                            </span>
+                        </label>
+                    </div>
+                    
+                    <!-- Place Order Button -->
+                    <button onclick="placeOrder()" 
+                            class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors mb-4">
+                        <i class="fas fa-lock mr-2"></i>
+                        Commander
+                    </button>
+                    
+                    <!-- Security Badges -->
+                    <div class="text-center">
+                        <p class="text-sm text-gray-600 mb-2">Paiement sécurisé</p>
+                        <div class="flex justify-center space-x-2">
+                            <i class="fas fa-shield-alt text-green-500"></i>
+                            <i class="fas fa-lock text-blue-500"></i>
+                            <span class="text-xs text-gray-500">SSL 256-bit</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="text-2xl font-bold text-blue-400">LAMITI</div>
+                        <div class="text-2xl font-light">SHOPPING</div>
+                    </div>
+                    <p class="text-gray-400">Votre destination shopping en ligne avec des milliers de produits tendance.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Navigation</h3>
+                    <ul class="space-y-2">
+                        <li><a href="catalogue.html" class="text-gray-400 hover:text-white transition-colors">Catalogue</a></li>
+                        <li><a href="categories.html" class="text-gray-400 hover:text-white transition-colors">Catégories</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Aide</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Livraison</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Retours</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Suivez-nous</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 LAMITI SHOPPING. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Sample order data
+        const sampleOrderItems = [
+            { name: 'Montre Connectée Pro', price: 299.99, quantity: 1 },
+            { name: 'Lunettes de Soleil', price: 89.99, quantity: 2 },
+            { name: 'T-Shirt Premium', price: 49.99, quantity: 1 }
+        ];
+
+        // Initialize checkout page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadOrderItems();
+            setupPaymentMethods();
+            updateShipping();
+        });
+
+        function loadOrderItems() {
+            const orderItemsContainer = document.getElementById('order-items');
+            const items = window.LamitiShopping ? window.LamitiShopping.cart : sampleOrderItems;
+            
+            orderItemsContainer.innerHTML = items.map(item => `
+                <div class="flex justify-between items-center">
+                    <div>
+                        <span class="font-medium">${item.name}</span>
+                        <span class="text-sm text-gray-500 ml-2">x${item.quantity}</span>
+                    </div>
+                    <span class="font-semibold">${window.LamitiShopping.formatPrice(item.price * item.quantity)}</span>
+                </div>
+            `).join('');
+        }
+
+        function setupPaymentMethods() {
+            const paymentMethods = document.querySelectorAll('input[name="payment"]');
+            const cardForm = document.getElementById('card-form');
+            
+            paymentMethods.forEach(method => {
+                method.addEventListener('change', function() {
+                    // Update visual selection
+                    document.querySelectorAll('.payment-method').forEach(el => {
+                        el.classList.remove('selected');
+                    });
+                    this.closest('.payment-method').classList.add('selected');
+                    
+                    // Show/hide card form
+                    if (this.value === 'card') {
+                        cardForm.style.display = 'block';
+                    } else {
+                        cardForm.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        function updateShipping() {
+            const shippingMethods = document.querySelectorAll('input[name="shipping"]');
+            const shippingSummary = document.getElementById('shipping-summary');
+            const totalSummary = document.getElementById('total-summary');
+            
+            shippingMethods.forEach(method => {
+                method.addEventListener('change', function() {
+                    let shippingCost = 0;
+                    let shippingText = 'Gratuite';
+                    
+                    switch (this.value) {
+                        case 'standard':
+                            shippingCost = 0;
+                            shippingText = 'Gratuite';
+                            break;
+                        case 'express':
+                            shippingCost = 9.99;
+                            shippingText = window.LamitiShopping.formatPrice(shippingCost);
+                            break;
+                        case 'premium':
+                            shippingCost = 19.99;
+                            shippingText = window.LamitiShopping.formatPrice(shippingCost);
+                            break;
+                    }
+                    
+                    shippingSummary.textContent = shippingText;
+                    
+                    // Recalculate total
+                    const subtotal = 439.97;
+                    const tax = 87.99;
+                    const total = subtotal + shippingCost + tax;
+                    totalSummary.textContent = window.LamitiShopping.formatPrice(total);
+                });
+            });
+        }
+
+        function placeOrder() {
+            const form = document.getElementById('checkout-form');
+            const terms = document.getElementById('terms');
+            
+            if (!form.checkValidity()) {
+                window.LamitiShopping.showNotification('Veuillez remplir tous les champs obligatoires', 'error');
+                return;
+            }
+            
+            if (!terms.checked) {
+                window.LamitiShopping.showNotification('Veuillez accepter les conditions générales de vente', 'error');
+                return;
+            }
+            
+            // Simulate order processing
+            window.LamitiShopping.showNotification('Traitement de votre commande...', 'info');
+            
+            setTimeout(() => {
+                window.location.href = 'confirmation.html';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

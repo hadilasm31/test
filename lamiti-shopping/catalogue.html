@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalogue - LAMITI SHOPPING</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #2c3e50;
+            --primary-blue: #3498db;
+            --accent-red: #e74c3c;
+            --light-gray: #f8f9fa;
+            --text-gray: #6c757d;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .filter-active {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+        
+        .price-range-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            background: #ddd;
+            border-radius: 3px;
+            outline: none;
+        }
+        
+        .price-range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="text-2xl font-bold text-blue-600">LAMITI</div>
+                    <div class="text-2xl font-light text-gray-700">SHOPPING</div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="text-gray-700 hover:text-blue-600 transition-colors">Accueil</a>
+                        <a href="catalogue.html" class="text-blue-600 font-medium hover:text-blue-800 transition-colors">Catalogue</a>
+                        <a href="categories.html" class="text-gray-700 hover:text-blue-600 transition-colors">Catégories</a>
+                        <a href="contact.html" class="text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-700 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-search text-xl"></i>
+                    </button>
+                    <button class="text-gray-700 hover:text-blue-600 transition-colors relative">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                    </button>
+                    <button class="text-gray-700 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-user text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="bg-gray-900 text-white pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl font-bold mb-4">Catalogue Complet</h1>
+            <p class="text-xl text-gray-300">Découvrez tous nos produits</p>
+        </div>
+    </section>
+
+    <!-- Search and Filters -->
+    <section class="py-8 bg-white border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-6 items-center justify-between">
+                <!-- Search Bar -->
+                <div class="flex-1 max-w-md">
+                    <div class="relative">
+                        <input type="text" id="search-input" placeholder="Rechercher des produits..." 
+                               class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <!-- Search suggestions dropdown -->
+                        <div id="search-suggestions" class="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 hidden z-10">
+                            <div class="p-2">
+                                <div class="text-sm text-gray-500 px-3 py-2">Suggestions</div>
+                                <div class="search-suggestion-item px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm">Montre connectée</div>
+                                <div class="search-suggestion-item px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm">Lunettes de soleil</div>
+                                <div class="search-suggestion-item px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm">Chaussures sport</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sort Options -->
+                <div class="flex items-center space-x-4">
+                    <label class="text-gray-700 font-medium">Trier par:</label>
+                    <select id="sort-select" class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500">
+                        <option value="name">Nom</option>
+                        <option value="price-low">Prix croissant</option>
+                        <option value="price-high">Prix décroissant</option>
+                        <option value="rating">Note</option>
+                        <option value="popularity">Popularité</option>
+                        <option value="newest">Nouveautés</option>
+                    </select>
+                </div>
+                
+                <!-- View Toggle -->
+                <div class="flex items-center space-x-2">
+                    <button id="grid-view" class="p-2 text-blue-600 bg-blue-100 rounded-lg hover:bg-blue-200 transition-colors">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                    <button id="list-view" class="p-2 text-gray-600 hover:text-blue-600 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+                
+                <!-- Quick Filters -->
+                <div class="flex items-center space-x-2">
+                    <button onclick="quickFilter('promo')" class="bg-red-100 text-red-600 px-3 py-2 rounded-lg hover:bg-red-200 transition-colors text-sm">
+                        <i class="fas fa-fire mr-1"></i>Promos
+                    </button>
+                    <button onclick="quickFilter('new')" class="bg-green-100 text-green-600 px-3 py-2 rounded-lg hover:bg-green-200 transition-colors text-sm">
+                        <i class="fas fa-leaf mr-1"></i>Nouveautés
+                    </button>
+                    <button onclick="quickFilter('bestseller')" class="bg-yellow-100 text-yellow-600 px-3 py-2 rounded-lg hover:bg-yellow-200 transition-colors text-sm">
+                        <i class="fas fa-star mr-1"></i>Best-sellers
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Active Filters Display -->
+            <div id="active-filters" class="mt-4 flex flex-wrap gap-2 hidden">
+                <span class="text-sm text-gray-600 mr-2">Filtres actifs:</span>
+                <!-- Active filter tags will be added here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Filters -->
+            <aside class="lg:w-1/4">
+                <div class="bg-white rounded-lg shadow-lg p-6 sticky top-24">
+                    <h3 class="text-xl font-bold text-gray-900 mb-6">Filtres</h3>
+                    
+                    <!-- Categories -->
+                    <div class="mb-6">
+                        <h4 class="font-semibold text-gray-900 mb-3">Catégories</h4>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="category-filter rounded text-blue-600" value="vetements">
+                                <span class="ml-2 text-gray-700">Vêtements</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="category-filter rounded text-blue-600" value="accessoires">
+                                <span class="ml-2 text-gray-700">Accessoires</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="category-filter rounded text-blue-600" value="chaussures">
+                                <span class="ml-2 text-gray-700">Chaussures</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="category-filter rounded text-blue-600" value="electronique">
+                                <span class="ml-2 text-gray-700">Électronique</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Price Range -->
+                    <div class="mb-6">
+                        <h4 class="font-semibold text-gray-900 mb-3">Prix</h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-sm text-gray-600">
+                                <span>0€</span>
+                                <span id="price-value">500€</span>
+                            </div>
+                            <input type="range" id="price-range" class="price-range-slider w-full" 
+                                   min="0" max="1000" value="500">
+                        </div>
+                    </div>
+                    
+                    <!-- Brands -->
+                    <div class="mb-6">
+                        <h4 class="font-semibold text-gray-900 mb-3">Marques</h4>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="brand-filter rounded text-blue-600" value="nike">
+                                <span class="ml-2 text-gray-700">Nike</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="brand-filter rounded text-blue-600" value="adidas">
+                                <span class="ml-2 text-gray-700">Adidas</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="brand-filter rounded text-blue-600" value="apple">
+                                <span class="ml-2 text-gray-700">Apple</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="brand-filter rounded text-blue-600" value="samsung">
+                                <span class="ml-2 text-gray-700">Samsung</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Clear Filters -->
+                    <button id="clear-filters" class="w-full bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300 transition-colors">
+                        Effacer les filtres
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Products Grid -->
+            <main class="lg:w-3/4">
+                <div class="mb-6 flex justify-between items-center">
+                    <p class="text-gray-600">
+                        <span id="product-count">24</span> produits trouvés
+                    </p>
+                </div>
+                
+                <div id="products-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <!-- Product cards will be dynamically generated -->
+                </div>
+                
+                <!-- Load More Button -->
+                <div class="text-center mt-12">
+                    <button id="load-more" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                        Charger plus de produits
+                    </button>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="text-2xl font-bold text-blue-400">LAMITI</div>
+                        <div class="text-2xl font-light">SHOPPING</div>
+                    </div>
+                    <p class="text-gray-400">Votre destination shopping en ligne avec des milliers de produits tendance.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Navigation</h3>
+                    <ul class="space-y-2">
+                        <li><a href="catalogue.html" class="text-gray-400 hover:text-white transition-colors">Catalogue</a></li>
+                        <li><a href="categories.html" class="text-gray-400 hover:text-white transition-colors">Catégories</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Aide</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Livraison</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Retours</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Suivez-nous</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 LAMITI SHOPPING. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/catalogue.js"></script>
+</body>
+</html>
