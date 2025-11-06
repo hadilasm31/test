@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Mobile - LAMITI SHOP</title>
+    <meta name="description" content="Tableau de bord administrateur mobile pour LAMITI SHOP">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom CSS for mobile -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-color: #1a1a1a;
+            --accent-color: #d4af37;
+            --text-color: #333333;
+            --bg-color: #fafafa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Mobile Login */
+        .mobile-login {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #333 100%);
+            padding: 2rem 1rem;
+        }
+        
+        .mobile-logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+        }
+        
+        .mobile-login-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .mobile-login-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .mobile-login-subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+        
+        .mobile-form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .mobile-form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+        
+        .mobile-form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+        
+        .mobile-form-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+        
+        .mobile-login-btn {
+            width: 100%;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .mobile-login-btn:hover {
+            background: #b8941f;
+            transform: translateY(-1px);
+        }
+        
+        .mobile-login-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Mobile Dashboard */
+        .mobile-dashboard {
+            display: none;
+            min-height: 100vh;
+            background: var(--bg-color);
+        }
+        
+        .mobile-header {
+            background: white;
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .mobile-header-logo {
+            height: 40px;
+            width: auto;
+        }
+        
+        .mobile-header-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .mobile-menu-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-btn:hover {
+            background: #f0f0f0;
+        }
+        
+        .mobile-main {
+            padding: 1rem;
+            padding-bottom: 80px;
+        }
+        
+        .mobile-section {
+            display: none;
+        }
+        
+        .mobile-section.active {
+            display: block;
+        }
+        
+        .mobile-section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        /* Mobile Stats */
+        .mobile-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .mobile-stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-stat-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .mobile-stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .mobile-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+        
+        .mobile-stat-label {
+            color: #666;
+            font-size: 0.8rem;
+        }
+        
+        /* Mobile Menu */
+        .mobile-bottom-menu {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-around;
+            padding: 0.5rem 0;
+            z-index: 1000;
+        }
+        
+        .mobile-menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #666;
+            font-size: 0.7rem;
+            min-width: 60px;
+        }
+        
+        .mobile-menu-item:hover,
+        .mobile-menu-item.active {
+            color: var(--accent-color);
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .mobile-menu-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        /* Mobile Products */
+        .mobile-products-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .mobile-product-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-product-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .mobile-product-header {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .mobile-product-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .mobile-product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .mobile-product-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .mobile-product-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+        
+        .mobile-product-category {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .mobile-product-price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+        
+        .mobile-product-stock {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .mobile-product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .mobile-action-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-edit-btn {
+            background: #3498db;
+            color: white;
+        }
+        
+        .mobile-edit-btn:hover {
+            background: #2980b9;
+        }
+        
+        .mobile-toggle-btn {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .mobile-toggle-btn.active {
+            background: #27ae60;
+        }
+        
+        .mobile-delete-btn {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .mobile-delete-btn:hover {
+            background: #c0392b;
+        }
+        
+        /* Mobile Orders */
+        .mobile-order-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-order-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .mobile-order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .mobile-order-id {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .mobile-order-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .mobile-order-customer {
+            margin-bottom: 0.5rem;
+        }
+        
+        .mobile-order-customer-name {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .mobile-order-customer-email {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .mobile-order-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+        }
+        
+        .mobile-order-total {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+        
+        .mobile-order-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        /* Mobile Add Button */
+        .mobile-add-btn {
+            position: fixed;
+            bottom: 90px;
+            right: 1rem;
+            width: 60px;
+            height: 60px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .mobile-add-btn:hover {
+            background: #b8941f;
+            transform: scale(1.1);
+        }
+        
+        /* Mobile Notifications */
+        .mobile-notification {
+            position: fixed;
+            top: 80px;
+            left: 1rem;
+            right: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-100px);
+            transition: transform 0.3s ease;
+            z-index: 2000;
+            max-width: none;
+        }
+        
+        .mobile-notification.show {
+            transform: translateY(0);
+        }
+        
+        .mobile-notification-content {
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .mobile-notification-success {
+            border-left: 4px solid #27ae60;
+        }
+        
+        .mobile-notification-error {
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .mobile-notification-info {
+            border-left: 4px solid #3498db;
+        }
+        
+        .mobile-notification-close {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #999;
+            padding: 0;
+            margin-left: auto;
+        }
+        
+        /* Loading Animation */
+        .mobile-loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .mobile-stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .mobile-login-card {
+                padding: 1.5rem;
+            }
+            
+            .mobile-main {
+                padding: 0.5rem;
+                padding-bottom: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Login -->
+    <div class="mobile-login" id="mobile-login">
+        <img src="resources/logo.png" alt="LAMITI SHOP Logo" class="mobile-logo">
+        
+        <div class="mobile-login-card">
+            <h1 class="mobile-login-title">Admin Mobile</h1>
+            <p class="mobile-login-subtitle">Gérez votre boutique en mobilité</p>
+            
+            <form id="mobile-login-form">
+                <div class="mobile-form-group">
+                    <label class="mobile-form-label" for="mobile-username">Nom d'utilisateur</label>
+                    <input type="text" id="mobile-username" class="mobile-form-input" placeholder="admin" required>
+                </div>
+                
+                <div class="mobile-form-group">
+                    <label class="mobile-form-label" for="mobile-password">Mot de passe</label>
+                    <input type="password" id="mobile-password" class="mobile-form-input" placeholder="lamiti2024" required>
+                </div>
+                
+                <button type="button" class="mobile-login-btn" onclick="handleMobileLogin()">
+                    Se connecter
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mobile Dashboard -->
+    <div class="mobile-dashboard" id="mobile-dashboard">
+        <!-- Header -->
+        <header class="mobile-header">
+            <img src="resources/logo.png" alt="LAMITI SHOP" class="mobile-header-logo">
+            <div class="mobile-header-title">Tableau de bord</div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </header>
+
+        <!-- Main Content -->
+        <main class="mobile-main">
+            <!-- Dashboard Section -->
+            <div class="mobile-section active" id="mobile-dashboard-section">
+                <h2 class="mobile-section-title">Statistiques</h2>
+                
+                <div class="mobile-stats-grid">
+                    <div class="mobile-stat-card">
+                        <div class="mobile-stat-icon">🛍️</div>
+                        <div class="mobile-stat-value" id="mobile-total-products">0</div>
+                        <div class="mobile-stat-label">Produits</div>
+                    </div>
+                    
+                    <div class="mobile-stat-card">
+                        <div class="mobile-stat-icon">📦</div>
+                        <div class="mobile-stat-value" id="mobile-total-orders">0</div>
+                        <div class="mobile-stat-label">Commandes</div>
+                    </div>
+                    
+                    <div class="mobile-stat-card">
+                        <div class="mobile-stat-icon">💰</div>
+                        <div class="mobile-stat-value" id="mobile-total-revenue">0 FCFA</div>
+                        <div class="mobile-stat-label">Revenus</div>
+                    </div>
+                    
+                    <div class="mobile-stat-card">
+                        <div class="mobile-stat-icon">⚠️</div>
+                        <div class="mobile-stat-value" id="mobile-low-stock-items">0</div>
+                        <div class="mobile-stat-label">Stock faible</div>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">Actions rapides</h3>
+                    
+                    <button class="w-full bg-blue-500 text-white p-4 rounded-lg font-semibold" onclick="showMobileSection('products')">
+                        📱 Gérer les produits
+                    </button>
+                    
+                    <button class="w-full bg-green-500 text-white p-4 rounded-lg font-semibold" onclick="showMobileSection('orders')">
+                        📦 Voir les commandes
+                    </button>
+                    
+                    <button class="w-full bg-purple-500 text-white p-4 rounded-lg font-semibold" onclick="showMobileSection('customers')">
+                        👥 Clients
+                    </button>
+                </div>
+            </div>
+
+            <!-- Products Section -->
+            <div class="mobile-section" id="mobile-products-section">
+                <h2 class="mobile-section-title">Produits</h2>
+                
+                <div class="mobile-products-grid" id="mobile-products-grid">
+                    <!-- Products will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Orders Section -->
+            <div class="mobile-section" id="mobile-orders-section">
+                <h2 class="mobile-section-title">Commandes</h2>
+                
+                <div id="mobile-orders-list">
+                    <!-- Orders will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Customers Section -->
+            <div class="mobile-section" id="mobile-customers-section">
+                <h2 class="mobile-section-title">Clients</h2>
+                
+                <div id="mobile-customers-list">
+                    <!-- Customers will be loaded here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Menu -->
+        <nav class="mobile-bottom-menu">
+            <a href="#" class="mobile-menu-item active" onclick="showMobileSection('dashboard')">
+                <div class="mobile-menu-icon">📊</div>
+                <div>Tableau</div>
+            </a>
+            
+            <a href="#" class="mobile-menu-item" onclick="showMobileSection('products')">
+                <div class="mobile-menu-icon">🛍️</div>
+                <div>Produits</div>
+            </a>
+            
+            <a href="#" class="mobile-menu-item" onclick="showMobileSection('orders')">
+                <div class="mobile-menu-icon">📦</div>
+                <div>Commandes</div>
+            </a>
+            
+            <a href="#" class="mobile-menu-item" onclick="showMobileSection('customers')">
+                <div class="mobile-menu-icon">👥</div>
+                <div>Clients</div>
+            </a>
+            
+            <a href="#" class="mobile-menu-item" onclick="logoutMobileAdmin()">
+                <div class="mobile-menu-icon">🚪</div>
+                <div>Quitter</div>
+            </a>
+        </nav>
+
+        <!-- Add Button -->
+        <button class="mobile-add-btn" onclick="showAddProductModal()" id="mobile-add-btn" style="display: none;">
+            +
+        </button>
+    </div>
+
+    <!-- Mobile Add Product Modal -->
+    <div class="modal-overlay" id="mobile-add-modal" style="display: none;">
+        <div class="modal-content mobile-modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Ajouter un produit</h2>
+                <button class="modal-close" onclick="closeMobileAddModal()">&times;</button>
+            </div>
+            
+            <form id="mobile-add-form" onsubmit="handleMobileAddProduct(event)">
+                <div class="mobile-form-group">
+                    <label class="mobile-form-label">Nom du produit</label>
+                    <input type="text" class="mobile-form-input" name="name" required>
+                </div>
+                
+                <div class="mobile-form-group">
+                    <label class="mobile-form-label">Catégorie</label>
+                    <select class="mobile-form-input" name="category" required>
+                        <option value="">Sélectionner</option>
+                        <option value="femmes">Mode Femme</option>
+                        <option value="hommes">Mode Homme</option>
+                        <option value="accessoires">Accessoires</option>
+                    </select>
+                </div>
+                
+                <div class="mobile-form-group">
+                    <label class="mobile-form-label">Prix (FCFA)</label>
+                    <input type="number" class="mobile-form-input" name="price" min="0" required>
+                </div>
+                
+                <div class="mobile-form-group">
+                    <label class="mobile-form-label">Stock</label>
+                    <input type="number" class="mobile-form-input" name="stock" min="0" required>
+                </div>
+                
+                <div class="mobile-form-group">
+                    <label class="mobile-form-label">Description</label>
+                    <textarea class="mobile-form-input" name="description" rows="3" required></textarea>
+                </div>
+                
+                <button type="submit" class="mobile-login-btn">Ajouter le produit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="config.js"></script>
+    <script src="main.js"></script>
+    
+    <script>
+        let isMobileAdmin = false;
+        let currentMobileSection = 'dashboard';
+        
+        // Initialize mobile admin
+        document.addEventListener('DOMContentLoaded', function() {
+            checkMobileAdminSession();
+        });
+        
+        function checkMobileAdminSession() {
+            const adminSession = localStorage.getItem('lamiti-admin');
+            if (adminSession) {
+                try {
+                    const session = JSON.parse(adminSession);
+                    const now = new Date();
+                    const loginTime = new Date(session.loginTime);
+                    const sessionDuration = now - loginTime;
+                    
+                    // Check if session is still valid (1 hour)
+                    if (sessionDuration < 3600000) {
+                        isMobileAdmin = true;
+                        showMobileDashboard();
+                        loadMobileDashboardContent();
+                    } else {
+                        // Session expired
+                        localStorage.removeItem('lamiti-admin');
+                    }
+                } catch (error) {
+                    console.error('Invalid admin session:', error);
+                    localStorage.removeItem('lamiti-admin');
+                }
+            }
+        }
+        
+        function handleMobileLogin() {
+            const username = document.getElementById('mobile-username').value.trim();
+            const password = document.getElementById('mobile-password').value.trim();
+
+            // Simple admin authentication (demo)
+            if (username === 'admin' && password === 'lamiti2024') {
+                isMobileAdmin = true;
+                
+                // Save admin session
+                localStorage.setItem('lamiti-admin', JSON.stringify({
+                    username,
+                    loginTime: new Date().toISOString()
+                }));
+                
+                showMobileDashboard();
+                showMobileNotification('Connexion réussie!', 'success');
+                loadMobileDashboardContent();
+            } else {
+                showMobileNotification('Identifiants incorrects!', 'error');
+                
+                // Add shake animation
+                const loginCard = document.querySelector('.mobile-login-card');
+                if (loginCard) {
+                    loginCard.style.animation = 'shake 0.5s ease-in-out';
+                    setTimeout(() => {
+                        loginCard.style.animation = '';
+                    }, 500);
+                }
+            }
+        }
+        
+        function showMobileDashboard() {
+            document.getElementById('mobile-login').style.display = 'none';
+            document.getElementById('mobile-dashboard').style.display = 'block';
+        }
+        
+        function loadMobileDashboardContent() {
+            if (!window.shop) {
+                setTimeout(loadMobileDashboardContent, 100);
+                return;
+            }
+            
+            // Load stats
+            const totalProducts = window.shop.products.length;
+            const totalOrders = window.shop.orders.length;
+            const totalRevenue = window.shop.orders.reduce((sum, order) => sum + order.total, 0);
+            const lowStockItems = window.shop.products.filter(p => p.stock < 5).length;
+            
+            document.getElementById('mobile-total-products').textContent = totalProducts;
+            document.getElementById('mobile-total-orders').textContent = totalOrders;
+            document.getElementById('mobile-total-revenue').textContent = window.shop.formatPrice(totalRevenue);
+            document.getElementById('mobile-low-stock-items').textContent = lowStockItems;
+            
+            // Load products
+            loadMobileProducts();
+            
+            // Load orders
+            loadMobileOrders();
+            
+            // Load customers
+            loadMobileCustomers();
+        }
+        
+        function showMobileSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.mobile-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById('mobile-' + sectionName + '-section').classList.add('active');
+            
+            // Update menu
+            document.querySelectorAll('.mobile-menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update add button visibility
+            const addBtn = document.getElementById('mobile-add-btn');
+            if (sectionName === 'products') {
+                addBtn.style.display = 'block';
+            } else {
+                addBtn.style.display = 'none';
+            }
+            
+            currentMobileSection = sectionName;
+        }
+        
+        function loadMobileProducts() {
+            if (!window.shop) return;
+            
+            const productsGrid = document.getElementById('mobile-products-grid');
+            
+            productsGrid.innerHTML = window.shop.products.map(product => `
+                <div class="mobile-product-card">
+                    <div class="mobile-product-header">
+                        <div class="mobile-product-image">
+                            <img src="${product.images[0]}" alt="${product.name}">
+                        </div>
+                        <div class="mobile-product-info">
+                            <div class="mobile-product-name">${product.name}</div>
+                            <div class="mobile-product-category">${product.category}</div>
+                            <div class="mobile-product-price">${window.shop.formatPrice(product.price)}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mobile-product-stock">
+                        Stock: ${product.stock > 0 ? product.stock : 'Rupture'}
+                    </div>
+                    
+                    <div class="mobile-product-actions">
+                        <button class="mobile-action-btn mobile-edit-btn" onclick="editMobileProduct('${product.id}')">
+                            ✏️ Modifier
+                        </button>
+                        <button class="mobile-action-btn mobile-toggle-btn ${product.active ? 'active' : ''}" onclick="toggleMobileProduct('${product.id}')">
+                            ${product.active ? '✅ Actif' : '⏸️ Inactif'}
+                        </button>
+                        <button class="mobile-action-btn mobile-delete-btn" onclick="deleteMobileProduct('${product.id}')">
+                            🗑️ Suppr.
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function loadMobileOrders() {
+            if (!window.shop) return;
+            
+            const ordersList = document.getElementById('mobile-orders-list');
+            
+            ordersList.innerHTML = window.shop.orders.map(order => `
+                <div class="mobile-order-card">
+                    <div class="mobile-order-header">
+                        <div class="mobile-order-id">${order.id}</div>
+                        <div class="mobile-order-status status-${order.status}">
+                            ${getMobileStatusLabel(order.status)}
+                        </div>
+                    </div>
+                    
+                    <div class="mobile-order-customer">
+                        <div class="mobile-order-customer-name">${order.customer.firstName} ${order.customer.lastName}</div>
+                        <div class="mobile-order-customer-email">${order.customer.email}</div>
+                    </div>
+                    
+                    <div class="mobile-order-details">
+                        <div><strong>Date:</strong> ${new Date(order.orderDate).toLocaleDateString('fr-FR')}</div>
+                        <div><strong>Paiement:</strong> ${order.paymentMethod === 'card' ? 'Carte' : 'Mobile'}</div>
+                    </div>
+                    
+                    <div class="mobile-order-total">
+                        Total: ${window.shop.formatPrice(order.total)}
+                    </div>
+                    
+                    <div class="mobile-product-actions">
+                        <button class="mobile-action-btn mobile-edit-btn" onclick="viewMobileOrder('${order.id}')">
+                            👁️ Voir
+                        </button>
+                        <button class="mobile-action-btn mobile-toggle-btn" onclick="updateMobileOrderStatus('${order.id}')">
+                            🔄 Statut
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function loadMobileCustomers() {
+            if (!window.shop) return;
+            
+            // Get unique customers
+            const customers = {};
+            window.shop.orders.forEach(order => {
+                const email = order.customer.email;
+                if (!customers[email]) {
+                    customers[email] = {
+                        ...order.customer,
+                        orders: [],
+                        totalSpent: 0
+                    };
+                }
+                customers[email].orders.push(order);
+                customers[email].totalSpent += order.total;
+            });
+            
+            const customersList = document.getElementById('mobile-customers-list');
+            
+            customersList.innerHTML = Object.values(customers).map(customer => `
+                <div class="mobile-order-card">
+                    <div class="mobile-order-customer">
+                        <div class="mobile-order-customer-name">${customer.firstName} ${customer.lastName}</div>
+                        <div class="mobile-order-customer-email">${customer.email}</div>
+                        <div class="mobile-order-customer-email">${customer.phone}</div>
+                    </div>
+                    
+                    <div class="mobile-order-details">
+                        <div><strong>Commandes:</strong> ${customer.orders.length}</div>
+                        <div><strong>Total:</strong> ${window.shop.formatPrice(customer.totalSpent)}</div>
+                    </div>
+                    
+                    <div class="mobile-product-actions">
+                        <button class="mobile-action-btn mobile-edit-btn" onclick="viewMobileCustomer('${customer.email}')">
+                            👁️ Détails
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function toggleMobileMenu() {
+            // Toggle menu visibility if needed
+            console.log('Toggle mobile menu');
+        }
+        
+        function logoutMobileAdmin() {
+            localStorage.removeItem('lamiti-admin');
+            isMobileAdmin = false;
+            location.reload();
+        }
+        
+        function showAddProductModal() {
+            document.getElementById('mobile-add-modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMobileAddModal() {
+            document.getElementById('mobile-add-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        function handleMobileAddProduct(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const productData = {
+                name: formData.get('name'),
+                category: formData.get('category'),
+                price: parseInt(formData.get('price')),
+                stock: parseInt(formData.get('stock')),
+                description: formData.get('description'),
+                images: ['resources/product-placeholder.jpg'],
+                sizes: ['Unique'],
+                colors: ['Noir'],
+                active: true,
+                featured: false,
+                onSale: false
+            };
+            
+            if (window.shop.addProduct(productData)) {
+                closeMobileAddModal();
+                loadMobileProducts();
+            }
+        }
+        
+        function editMobileProduct(productId) {
+            showMobileNotification('Fonctionnalité à venir!', 'info');
+        }
+        
+        function toggleMobileProduct(productId) {
+            window.shop.toggleProductStatus(productId);
+            loadMobileProducts();
+        }
+        
+        function deleteMobileProduct(productId) {
+            if (confirm('Supprimer ce produit ?')) {
+                window.shop.deleteProduct(productId);
+                loadMobileProducts();
+            }
+        }
+        
+        function viewMobileOrder(orderId) {
+            showMobileNotification('Détails de commande à venir!', 'info');
+        }
+        
+        function updateMobileOrderStatus(orderId) {
+            window.shop.updateOrderStatus(orderId, 'confirmed');
+            loadMobileOrders();
+            showMobileNotification('Statut mis à jour!', 'success');
+        }
+        
+        function viewMobileCustomer(email) {
+            showMobileNotification('Détails client à venir!', 'info');
+        }
+        
+        function getMobileStatusLabel(status) {
+            const labels = {
+                'pending': 'En attente',
+                'confirmed': 'Confirmée',
+                'shipped': 'Expédiée',
+                'delivered': 'Livrée',
+                'cancelled': 'Annulée'
+            };
+            return labels[status] || status;
+        }
+        
+        function showMobileNotification(message, type = 'info', duration = 3000) {
+            const notification = document.createElement('div');
+            notification.className = `mobile-notification mobile-notification-${type}`;
+            notification.innerHTML = `
+                <div class="mobile-notification-content">
+                    <span class="notification-message">${message}</span>
+                    <button class="mobile-notification-close" onclick="this.parentElement.parentElement.remove()">&times;</button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        if (notification.parentElement) {
+                            notification.remove();
+                        }
+                    }, 300);
+                }
+            }, duration);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+        }
+        
+        // Handle responsive behavior
+        window.addEventListener('resize', function() {
+            // Adjust layout if needed
+        });
+    </script>
+</body>
+</html>
